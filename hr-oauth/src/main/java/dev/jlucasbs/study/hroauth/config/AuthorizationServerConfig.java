@@ -19,8 +19,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	
 	@Value("${oauth.client.name}")
 	private String clientName;
+	
 	@Value("${oauth.client.secret}")
-	private String secret;
+	private String clientSecret;
 
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -41,7 +42,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.inMemory().withClient(clientName).secret(encoder.encode(secret)).scopes("read", "write")
+		clients.inMemory().withClient(clientName).secret(encoder.encode(clientSecret)).scopes("read", "write")
 				.authorizedGrantTypes("password").accessTokenValiditySeconds(86400);
 	}
 
